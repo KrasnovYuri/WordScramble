@@ -40,13 +40,21 @@ struct ContentView: View {
             } message: {
                 Text(errorMessage)
             }
+            .toolbar {
+                Button("Start game") {
+                    startGame()
+                }
+        }
+        
         }
     }
     func addNewWord() {
         //пишем слово в нижнем регистре и обрезаем его, чтобы убедиться, что мы не добавляем повторяющиеся слова с различиями в регистре
         let answer = newWord.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
         
-        guard answer.count > 0 else { return }
+        guard answer.count > 3 else { return }
+        guard answer != rootWord else { return }
+        //Запрещайте ответы, которые короче трех букв или являются просто нашим начальным словом.
         
         guard isOriginal(word: answer) else {
             wordError(title: "Word used already", message: "Be more original!")
